@@ -19,3 +19,5 @@ $(OBJS): $(OBJDIR)/%.o: %.c $(OBJDIR)/%.d
 $(ARC): $(OBJS)
 	$(common-rule)
 	$(AR) -r $@ $^
+
+COMPONENTS

@@ -1,41 +1,21 @@
-# posix development tools
-STRIP :=strip
-NM    :=nm
-# compiler tool chain
-CC    :=clang
-CPP   :=$(CC) -E# : Preprocess only; do not compile, assemble or link.
-CAS   :=$(CC) -S# : Compile only; do not assemble or link.
-CXX   :=g++
-AS    :=as
-AR    :=ar
-LD    :=ld
-DUMP  :=objdump
-GDB   :=gdb
-TOOLS :=$(MAKE) $(STRIP) $(NM) $(CC) $(CXX) $(AS) $(AR) $(LD) $(DUMP) $(GDB)
-
-# compiler option
-CFLAGS  =-g#     : Debugging Option
-CFLAGS += -O0#   : Optimization Option
-CFLAGS += -Wall# : Warning Option
-CFLAGS += -fprofile-instr-generate -fcoverage-mapping 
-# link library path
-# LIBS  =-LC:/MinGW/lib
-LIBS  =-LC:/msys64/mingw64/lib
-LIBS +=-LC:/msys64/usr/lib
-
-# preprocessor definition
-DEFINES   =-DDUMMY
-# include path
-INCLUDES  =-I./
-# source code file
+PathRoot :=..
+Component:=$(notdir $(CURDIR))
 SRCS     := $(wildcard *.c)
+PROG    :=$(PathRoot)/_build_/$(Component).exe#        : program file
+all: $(PROG)
+include $(PathRoot)/_build_/MakefileLibs.mk
+include $(PathRoot)/_build_/MakefileComponent.mk
+
+COMPONENTS  = add
+COMPONENTS += divide
+COMPONENTS += multiply
+COMPONENTS += subtract
 
 # output directory
 OBJDIR     =obj
 DUMPDIR    =reverse
 RELEASEDIR =release
 # output file
-PROG    :=program.exe#                                 : program file
 MAP     :=$(PROG:%.exe=%.map)#                         : map file
 RELEASE :=$(RELEASEDIR)/$(PROG)#                       : program file for release
 DASMR   :=$(DUMPDIR)/$(PROG:%.exe=%.dasmr)#            : disassembler file(release)
@@ -64,7 +44,6 @@ endef
 .PHONY: clean version test
 preprocess: $(PPS)
 assemble: $(ASMS)
-all: $(PROG)
 release: $(RELEASE)
 release-dump: $(DASMR)
 dump: $(DASMS) $(NMS) $(DASM) $(NMF) $(HEAD) $(LDD)
