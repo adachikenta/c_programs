@@ -6,6 +6,11 @@
  * @date 20XX-XX-XX
  */
 #include <stdio.h>
+#include "add.h"
+#include "subtract.h"
+#include "multiply.h"
+#include "divide.h"
+
 /**
  * @brief ユーザー実行内容を表示するプログラムのエントリーポイント
  * 
@@ -21,6 +26,10 @@ int main(int argc, char const *argv[])
         /* 標準出力：各引数文字列 */
         printf("[command line info]: %s\n", argv[i]);
     }
+    add(1,1);
+    subtract(1,1);
+    multiply(1,1);
+    divide(1,1);
     /* プログラム終了コード返却 */
     return 0;
 }
