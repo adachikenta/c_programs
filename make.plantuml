@@ -1,0 +1,106 @@
+@startuml enviroment
+folder "_build_/" {
+  frame "Makefile" {
+    [all]
+  }
+  frame "Makefile.mk" {
+    [all] --> [SUBDIRS]
+  }
+}
+folder "add/" {
+  frame "add-Makefile" {
+    [add] <.. [all]
+  }
+}
+folder "subtract/" {
+  frame "subtract-Makefile" {
+    [subtract] <.. [all]
+  }
+}
+folder "main/" {
+  frame "main-Makefile" {
+    [main] <.. [all]
+  }
+}
+folder "multiply/" {
+  frame "multiply-Makefile" {
+    [multiply] <.. [all]
+  }
+}
+folder "divide/" {
+  frame "divide-Makefile" {
+    [divide] <.. [all]
+  }
+}
+folder "_build_/" {
+  frame "MakefileComponent.mk" {
+    [SUBDIRS] <-- [Component]
+    [add] --> [Component]
+    [subtract] --> [Component]
+    [multiply] --> [Component]
+    [divide] --> [Component]
+  }
+}
+folder "_build_/obj/" {
+  frame "add.a" {
+    frame "add.o" {
+      [add()] <<-- [add]
+    }
+  }
+  frame "subtract.a" {
+    frame "subtract.o" {
+      [subtract()] <<-- [subtract]
+    }
+  }
+  frame "multiply.a" {
+    frame "multiply.o" {
+      [multiply()] <<-- [multiply]
+    }
+  }
+  frame "divide.a" {
+    frame "divide.o" {
+      [divide()] <<-- [divide]
+    }
+  }
+  frame "main.a" {
+    frame "main.o" {
+      [main()] <<-- [main]
+    }
+  }
+}
+folder "_build_/out/" {
+  frame "main.exe" {
+    [program] <<-- [main()]
+    [program] <<-- [add()]
+    [program] <<-- [subtract()]
+    [program] <<-- [multiply()]
+    [program] <<-- [divide()]
+  }
+}
+folder "_build_/" {
+  frame "MakefileTool.mk" {
+    [Component] --> [TOOLS]
+  }
+  frame "MakefileOption.mk" {
+    [Component] --> [FLAGS_CC]
+  }
+  frame "MakefileLibs.mk" {
+    [Component] --> [LIBS]
+  }
+  frame "MakefileDefine.mk" {
+    [Component] --> [FLAGS_DEFINE]
+  }
+  frame "MakefileInclude.mk" {
+    [Component] --> [FLAGS_INCLUDE]
+  }
+  frame "MakefileArtifacts.mk" {
+    [Component] --> [OUTPUTS]
+  }
+  frame "MakefileFunc.mk" {
+    [Component] --> [define]
+  }
+  frame "MakefileRule.mk" {
+    [Component] --> [TARGETS]
+  }
+}
+@enduml

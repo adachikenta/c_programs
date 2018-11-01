@@ -1,4 +1,5 @@
 PathRoot :=..
+MAINDIR := $(PathRoot)/main
 include Makefile.mk
 .PHONY: all $(SUBDIRS) clean
 all: $(SUBDIRS)
