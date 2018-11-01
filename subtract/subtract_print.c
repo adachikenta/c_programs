@@ -1,5 +1,5 @@
 /**
- * @file divide.c
+ * @file subtract.c
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2018
  * 
  */
+#include <stdio.h>
+#include "subtract.h"
 /**
  * @brief 
  * 
@@ -15,7 +17,9 @@
  * @param y 
  * @return int 
  */
-int divide(int x, int y)
+int subtract_print(int x, int y)
 {
-    return (x) / (y);
+    int ret = subtract(x,y);
+    printf("%d - %d = %d\n",x,y,ret);
+    return ret;
 }

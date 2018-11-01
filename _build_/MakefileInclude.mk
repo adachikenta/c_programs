@@ -1,4 +1,3 @@
-# include path
 FLAGS_INCLUDE  =-I./
 FLAGS_INCLUDE +=-I../add
 FLAGS_INCLUDE +=-I../subtract

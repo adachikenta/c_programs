@@ -1,4 +1,4 @@
 CC    :=clang
-AR    :=ar
-LD    :=ld
+AR    :=ld -r -o
+LD    :=clang
 TOOLS :=$(MAKE) $(CC) $(AR) $(LD)

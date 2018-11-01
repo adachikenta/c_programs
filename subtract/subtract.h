@@ -9,3 +9,4 @@
  * 
  */
 int subtract(int x, int y);
+int subtract_print(int x, int y);

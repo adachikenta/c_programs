@@ -1,4 +1,3 @@
-# targets
 .PHONY: clean
 
 ifneq ($(findstring $(MAKECMDGOALS),$(origin clean)),)
@@ -6,13 +5,13 @@ ifneq ($(findstring $(MAKECMDGOALS),$(origin clean)),)
 endif
 
 ifeq ($(Component),main)
-$(OUT): $(OBJS)
+$(OUT): $(OBJS) $(ARCS)
 	$(common-rule)
-	$(LD) $^ $(ARCS) $(LIBS) $(OUTPUT_OPTION)
+	$(LD) $(FLAGS_CC) -Wl,-Map=$(MAP) $(LIBS) $^ $(OUTPUT_OPTION)
 else
 $(ARC): $(OBJS)
 	$(common-rule)
-	$(AR) -r $@ $^
+	$(AR) $@ $^
 endif
 
 $(OBJS): $(OBJDIR)/%.o: %.c $(OBJDIR)/%.d

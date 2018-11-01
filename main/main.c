@@ -26,10 +26,10 @@ int main(int argc, char const *argv[])
         /* 標準出力：各引数文字列 */
         printf("[command line info]: %s\n", argv[i]);
     }
-    add(1,1);
-    subtract(1,1);
-    multiply(1,1);
-    divide(1,1);
+    add_print(1,1);
+    subtract_print(1,1);
+    multiply_print(1,1);
+    divide_print(1,1);
     /* プログラム終了コード返却 */
     return 0;
 }

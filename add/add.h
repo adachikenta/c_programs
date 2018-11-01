@@ -9,3 +9,4 @@
  * 
  */
 int add(int x, int y);
+int add_print(int x, int y);

@@ -1,5 +1,5 @@
 /**
- * @file divide.c
+ * @file multiply.c
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2018
  * 
  */
+#include <stdio.h>
+#include <multiply.h>
 /**
  * @brief 
  * 
@@ -15,7 +17,9 @@
  * @param y 
  * @return int 
  */
-int divide(int x, int y)
+int multiply_print(int x, int y)
 {
-    return (x) / (y);
+    int ret = multiply(x,y);
+    printf("%d * %d = %d\n",x,y,ret);
+    return ret;
 }

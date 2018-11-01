@@ -9,3 +9,4 @@
  * 
  */
 int multiply(int x, int y);
+int multiply_print(int x, int y);

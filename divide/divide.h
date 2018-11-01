@@ -9,3 +9,4 @@
  * 
  */
 int divide(int x, int y);
+int divide_print(int x, int y);

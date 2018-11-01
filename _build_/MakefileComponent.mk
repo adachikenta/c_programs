@@ -1,7 +1,7 @@
 include $(PathRoot)/_build_/MakefileTool.mk
 include $(PathRoot)/_build_/MakefileOption.mk
 ifeq ($(Component),main)
-include $(PathRoot)/MakefileSubDirs.mk
+include $(PathRoot)/_build_/Makefile.mk
 include $(PathRoot)/_build_/MakefileLibs.mk
 endif
 include $(PathRoot)/_build_/MakefileDefine.mk

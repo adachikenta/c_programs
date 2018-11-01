@@ -1,9 +1,10 @@
-include MakefileSubDirs.mk
+PathRoot :=..
+include Makefile.mk
 .PHONY: all $(SUBDIRS) clean
 all: $(SUBDIRS)
 	@echo ------------------------------------------------------------------------------------------------------------------------
 	@echo main
-	@$(MAKE) --no-print-directory -C main
+	@$(MAKE) --no-print-directory -C $(MAINDIR)
 
 $(SUBDIRS):
 	@echo ------------------------------------------------------------------------------------------------------------------------
@@ -12,3 +13,4 @@ $(SUBDIRS):
 
 clean:
 	@dirs='$(SUBDIRS)'; for dir in $$dirs; do echo $$dir; $(MAKE) clean --no-print-directory -C $$dir; done
+	@$(MAKE) clean --no-print-directory -C $(MAINDIR)

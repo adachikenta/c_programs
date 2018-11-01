@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2018
  * 
  */
+#include <stdio.h>
+#include "divide.h"
 /**
  * @brief 
  * 
@@ -15,7 +17,9 @@
  * @param y 
  * @return int 
  */
-int divide(int x, int y)
+int divide_print(int x, int y)
 {
-    return (x) / (y);
+    int ret = divide(x,y);
+    printf("%d / %d = %d\n",x,y,ret);
+    return ret;
 }
