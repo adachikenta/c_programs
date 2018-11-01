@@ -1,106 +1,142 @@
 @startuml enviroment
+skinparam folder {
+	backgroundColor<<OUTPUT>> aquamarine
+}
 folder "_build_/" {
   frame "Makefile" {
     [all]
   }
   frame "Makefile.mk" {
-    [all] --> [SUBDIRS]
+    [all] --> [SUBDIRS] #blue
   }
 }
 folder "add/" {
   frame "add-Makefile" {
-    [add] <.. [all]
+    [add] <.. [all] #blue
   }
 }
 folder "subtract/" {
   frame "subtract-Makefile" {
-    [subtract] <.. [all]
+    [subtract] <.. [all] #blue
   }
 }
 folder "main/" {
   frame "main-Makefile" {
-    [main] <.. [all]
+    [main] <.. [all] #blue
   }
 }
 folder "multiply/" {
   frame "multiply-Makefile" {
-    [multiply] <.. [all]
+    [multiply] <.. [all] #blue
   }
 }
 folder "divide/" {
   frame "divide-Makefile" {
-    [divide] <.. [all]
+    [divide] <.. [all] #blue
   }
 }
 folder "_build_/" {
   frame "MakefileComponent.mk" {
-    [SUBDIRS] <-- [Component]
-    [add] --> [Component]
-    [subtract] --> [Component]
-    [multiply] --> [Component]
-    [divide] --> [Component]
+    [include Makefiles]
+    [SUBDIRS] <-- [include Makefiles]
+    [add] --> [include Makefiles]
+    [subtract] --> [include Makefiles]
+    [multiply] --> [include Makefiles]
+    [divide] --> [include Makefiles]
   }
 }
-folder "_build_/obj/" {
+folder "_build_/obj/" <<OUTPUT>> {
   frame "add.a" {
     frame "add.o" {
-      [add()] <<-- [add]
+      [add()] <<-- [add] #black
     }
   }
   frame "subtract.a" {
     frame "subtract.o" {
-      [subtract()] <<-- [subtract]
+      [subtract()] <<-- [subtract] #black
     }
   }
   frame "multiply.a" {
     frame "multiply.o" {
-      [multiply()] <<-- [multiply]
+      [multiply()] <<-- [multiply] #black
     }
   }
   frame "divide.a" {
     frame "divide.o" {
-      [divide()] <<-- [divide]
+      [divide()] <<-- [divide] #black
     }
   }
   frame "main.a" {
     frame "main.o" {
-      [main()] <<-- [main]
+      [main()] <<-- [main] #black
     }
   }
 }
-folder "_build_/out/" {
+folder "_build_/out/" <<OUTPUT>> {
   frame "main.exe" {
-    [program] <<-- [main()]
-    [program] <<-- [add()]
-    [program] <<-- [subtract()]
-    [program] <<-- [multiply()]
-    [program] <<-- [divide()]
+    [program] <<-- [main()] #black
+    [program] <<-- [add()] #black
+    [program] <<-- [subtract()] #black
+    [program] <<-- [multiply()] #black
+    [program] <<-- [divide()] #black
   }
 }
 folder "_build_/" {
-  frame "MakefileTool.mk" {
-    [Component] --> [TOOLS]
+  frame "MakefileComponent.mk" {
+    frame "MakefileRule.mk" {
+      [TARGETS]
+    }
+    frame "MakefileFunc.mk" {
+      [define]
+      [TARGETS] ..> [define]
+    }
+    frame "MakefileTool.mk" {
+      [TOOLS]
+      [TARGETS] .> [TOOLS]
+    }
+    frame "MakefileOption.mk" {
+      [FLAGS_CC]
+      [TOOLS] .. [FLAGS_CC] #white
+    }
+    frame "MakefileDefine.mk" {
+      [FLAGS_DEFINE]
+      [FLAGS_CC] .. [FLAGS_DEFINE] #white
+    }
+    frame "MakefileInclude.mk" {
+      [FLAGS_INCLUDE]
+      [FLAGS_DEFINE] .. [FLAGS_INCLUDE] #white
+    }
   }
-  frame "MakefileOption.mk" {
-    [Component] --> [FLAGS_CC]
+}
+folder "tool-directory/" {
+  frame "cc.exe" {
+    [TOOLS] ..> cc.exe
+    [FLAGS_CC] ..> [compiler]
+    [FLAGS_DEFINE] .> [compiler]
+    [compiler] <.. [FLAGS_INCLUDE]
   }
-  frame "MakefileLibs.mk" {
-    [Component] --> [LIBS]
+  frame "ar.exe" {
+    [TOOLS] ..> ar.exe
+    [compiler] .. [archiver] #white
   }
-  frame "MakefileDefine.mk" {
-    [Component] --> [FLAGS_DEFINE]
+  frame "ld.exe" {
+    [TOOLS] ..> ld.exe
+    [archiver] .. [linker] #white
   }
-  frame "MakefileInclude.mk" {
-    [Component] --> [FLAGS_INCLUDE]
-  }
-  frame "MakefileArtifacts.mk" {
-    [Component] --> [OUTPUTS]
-  }
-  frame "MakefileFunc.mk" {
-    [Component] --> [define]
-  }
-  frame "MakefileRule.mk" {
-    [Component] --> [TARGETS]
+}
+folder "_build_/" {
+  frame "MakefileComponent.mk" {
+    frame "MakefileArtifacts.mk" {
+      [OUTPUTS] #aquamarine
+      [FLAGS_INCLUDE] .. [OUTPUTS] #white
+      [compiler] ..> [OUTPUTS] #black
+      [archiver] ..> [OUTPUTS] #black
+      [linker] .> [OUTPUTS] #black
+    }
+    frame "MakefileLibs.mk" {
+      [OUTPUTS] .. [LIBS] #white
+      [LIBS] ..> [linker]
+    }
   }
 }
 @enduml
