@@ -4,45 +4,41 @@ skinparam folder {
 }
 folder "_build_/" {
   frame "Makefile" {
-    [all]
-  }
-  frame "Makefile.mk" {
-    [all] --> [SUBDIRS] #blue
+    [top]
   }
 }
 folder "add/" {
   frame "add-Makefile" {
-    [add] <.. [all] #blue
+    [add] <.. [top] #blue
   }
 }
 folder "subtract/" {
   frame "subtract-Makefile" {
-    [subtract] <.. [all] #blue
+    [subtract] <.. [top] #blue
   }
 }
 folder "main/" {
   frame "main-Makefile" {
-    [main] <.. [all] #blue
+    [main] <.. [top] #blue
   }
 }
 folder "multiply/" {
   frame "multiply-Makefile" {
-    [multiply] <.. [all] #blue
+    [multiply] <.. [top] #blue
   }
 }
 folder "divide/" {
   frame "divide-Makefile" {
-    [divide] <.. [all] #blue
+    [divide] <.. [top] #blue
   }
 }
 folder "_build_/" {
-  frame "MakefileComponent.mk" {
-    [include Makefiles]
-    [SUBDIRS] <-- [include Makefiles]
-    [add] --> [include Makefiles]
-    [subtract] --> [include Makefiles]
-    [multiply] --> [include Makefiles]
-    [divide] --> [include Makefiles]
+  frame "MakefileRule.mk" {
+    [top] .. [TARGETS] #white
+    [add] --> [TARGETS]
+    [subtract] --> [TARGETS]
+    [multiply] --> [TARGETS]
+    [divide] --> [TARGETS]
   }
 }
 folder "_build_/obj/" <<OUTPUT>> {
@@ -82,61 +78,48 @@ folder "_build_/out/" <<OUTPUT>> {
   }
 }
 folder "_build_/" {
-  frame "MakefileComponent.mk" {
-    frame "MakefileRule.mk" {
-      [TARGETS]
-    }
-    frame "MakefileFunc.mk" {
-      [define]
-      [TARGETS] ..> [define]
-    }
     frame "MakefileTool.mk" {
       [TOOLS]
-      [TARGETS] .> [TOOLS]
+      [TARGETS] ..> [TOOLS]
     }
+}
     frame "MakefileOption.mk" {
-      [FLAGS_CC]
-      [TOOLS] .. [FLAGS_CC] #white
+      [OPTION]
     }
     frame "MakefileDefine.mk" {
-      [FLAGS_DEFINE]
-      [FLAGS_CC] .. [FLAGS_DEFINE] #white
+      [DEFINE]
     }
     frame "MakefileInclude.mk" {
-      [FLAGS_INCLUDE]
-      [FLAGS_DEFINE] .. [FLAGS_INCLUDE] #white
+      [INCLUDE]
     }
-  }
-}
+    frame "MakefileLibs.mk" {
+      [LIBS]
+    }
 folder "tool-directory/" {
   frame "cc.exe" {
-    [TOOLS] ..> cc.exe
-    [FLAGS_CC] ..> [compiler]
-    [FLAGS_DEFINE] .> [compiler]
-    [compiler] <.. [FLAGS_INCLUDE]
+    [compiler]
+    [TOOLS] ..> [compiler]
+    [compiler] <.. [OPTION]
+    [compiler] <.. [DEFINE]
+    [compiler] <.. [INCLUDE]
   }
   frame "ar.exe" {
-    [TOOLS] ..> ar.exe
-    [compiler] .. [archiver] #white
+    [archiver]
+    [TOOLS] ..> [archiver]
   }
   frame "ld.exe" {
-    [TOOLS] ..> ld.exe
-    [archiver] .. [linker] #white
+    [linker]
+    [TOOLS] ..> [linker]
+    [linker] <.. [LIBS]
   }
 }
 folder "_build_/" {
-  frame "MakefileComponent.mk" {
-    frame "MakefileArtifacts.mk" {
+    frame "MakefileOutput.mk" {
       [OUTPUTS] #aquamarine
-      [FLAGS_INCLUDE] .. [OUTPUTS] #white
-      [compiler] ..> [OUTPUTS] #black
-      [archiver] ..> [OUTPUTS] #black
-      [linker] .> [OUTPUTS] #black
+      [TOOLS] .. [OUTPUTS] #white
+      [OUTPUTS] <.. [compiler] #black
+      [OUTPUTS] <.. [archiver] #black
+      [OUTPUTS] <.. [linker] #black
     }
-    frame "MakefileLibs.mk" {
-      [OUTPUTS] .. [LIBS] #white
-      [LIBS] ..> [linker]
-    }
-  }
 }
 @enduml
