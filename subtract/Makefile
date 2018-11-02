@@ -1,4 +1,10 @@
+##############
 PathRoot :=..
-Component:=$(notdir $(CURDIR))
+Module   :=$(notdir $(CURDIR))
+
+##############
 SRCS     := $(wildcard *.c)
-include $(PathRoot)/_build_/MakefileComponent.mk
+
+##############
+include $(PathRoot)/MakefileEnv.mk
+include $(PathMake)/MakefileRule.mk
